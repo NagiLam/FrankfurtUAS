@@ -1,0 +1,35 @@
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen
+except ImportError:
+    # Fallback
+    from urllib2 import urlopen
+
+import json
+
+def get_jsonparsed_data(url):
+    
+    response = urlopen(url)
+    data = response.read().decode("utf-8")
+    return json.loads(data)
+    
+url = [("https://api.nomics.com/v1/currencies/ticker?key=demo-b5d84e505a11969a7184f899fbb40ae1&ids=BTC"),
+("https://api.nomics.com/v1/currencies/ticker?key=demo-b5d84e505a11969a7184f899fbb40ae1&ids=ETH"), 
+("https://api.nomics.com/v1/currencies/ticker?key=demo-b5d84e505a11969a7184f899fbb40ae1&ids=USDT"),
+("https://api.nomics.com/v1/currencies/ticker?key=demo-b5d84e505a11969a7184f899fbb40ae1&ids=DOT"),
+("https://api.nomics.com/v1/currencies/ticker?key=demo-b5d84e505a11969a7184f899fbb40ae1&ids=XRP")]
+
+def main(args):
+    string_array = []
+    float_array = []
+    for x in range(0, 5):
+        string_array.append(get_jsonparsed_data(url[x])[0]['price'])
+        float_array.append(float(string_array[x].replace("'\'", "")))
+
+    # if (float_array[0] > 35000):
+        
+    a = {"payload":float_array}
+    return a
+    # else:
+    #     a = {"payload":0}
+    #     return a

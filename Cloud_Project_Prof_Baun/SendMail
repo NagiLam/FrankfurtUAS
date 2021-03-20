@@ -1,0 +1,34 @@
+const nodemailer = require('nodemailer');
+
+
+async function main(params){
+
+
+let transport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, 
+    auth: {
+        user: 'sahillioglu12@googlemail.com', 
+        pass: 'xxxx xxxx xxxx xxxx' 
+    }
+
+});
+
+var mailOptions = {
+  from: 'sahillioglu12@googlemail.com',
+  to: 'marcel.sahillioglu@stud.fra-uas.de',
+  subject: 'Sending Email using Node.js',
+  text: '1 Bitcoin = ' + JSON.stringify(params.crypto[0]) + ' USD.\n' +
+        '1 Ethereum = ' + JSON.stringify(params.crypto[1]) + ' USD.\n' +
+        '1 Thether = ' + JSON.stringify(params.crypto[2]) + ' USD.\n' +
+        '1 Polkadot = ' + JSON.stringify(params.crypto[3]) + ' USD.\n' +
+        '1 Ripple = ' + JSON.stringify(params.crypto[4]) + ' USD. '
+};
+
+
+let info = await transport.sendMail(mailOptions);
+
+console.log("Message sent: %s", info.messageId);
+
+}

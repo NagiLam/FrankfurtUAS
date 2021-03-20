@@ -1,0 +1,33 @@
+
+
+const openwhisk = require('openwhisk');
+const ow = openwhisk();
+
+function main() {
+
+    
+    return ow.actions.invoke({
+        name: 'CloudComp/CryptoTrack',
+        blocking: true,
+        result: true,
+        params: {}
+    })
+    .then((result) => {
+        console.log('Result Crypto ' + JSON.stringify(result.payload));
+
+    //if(JSON.stringify(result.payload) != 0){
+    return ow.actions.invoke({ 
+        name: 'CloudComp/SendMail',
+        blocking: true,
+        result: true,
+        params: {crypto: result.payload}
+    });//}
+    })
+    .catch((error) => {
+        console.log('An error occurred! ' + JSON.stringify(error));
+        // IMPORTANT! Re-throw the error, to avoid following .then() block to be executed!
+        throw error;
+    })
+    
+}
+

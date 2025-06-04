@@ -1,1 +1,1 @@
-Here is the place to upload Master thesis material.
+This is the designated area for uploading Master's thesis materials.
